@@ -624,6 +624,17 @@ a:hover { color: #ffffff; }
   padding: 40px 12px;
 }
 
+.noscript-games {
+  padding: 24px;
+  border: 2px dashed var(--border-strong);
+  border-radius: 20px;
+  color: var(--muted);
+}
+
+.noscript-games ul { margin: 12px 0; padding-left: 22px; }
+.noscript-games li { margin: 8px 0; }
+.noscript-games a { color: var(--txt); font-weight: 800; }
+
 /* ————— how it works (numbered, bordered) ————— */
 
 .how {
