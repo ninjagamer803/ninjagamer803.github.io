@@ -1,0 +1,9 @@
+# GitHub Pages / Jekyll config.
+# Only the playable site is published. Repo housekeeping, docs and tooling
+# stay in git but are never served at ninjagamer803.github.io.
+exclude:
+  - README.md
+  - HOWTO-ADD-A-GAME.md
+  - tools/
+  - .gitignore
+  - games/hamster-apocalypse/SONG.md

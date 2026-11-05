@@ -9,7 +9,7 @@ Live site: **https://ninjagamer803.github.io**
 | Slug | What it is |
 |---|---|
 | `games/hamster-apocalypse/` | Hamster Apocalypse — first-person zombie shooter (Three.js) |
-| `games/hamster-apocalypse-remix/` | Same game, second shelf slot (multi-game test / agent-install demo) |
+| `games/sea-monsters/` | Attack of the Sea Monsters — underwater 3D shooter starring Hermy the Hermit Crab |
 
 ## How it works
 
@@ -18,6 +18,16 @@ Static site, GitHub Pages, zero build step:
 1. `index.html` → `assets/app.js` loads `games/index.json` (list of slugs)
 2. For each slug, fetches `games/<slug>/game.json` → `title`, `author`, `description`, `screenshot.png`
 3. Renders cards; clicking links to `games/<slug>/`
+
+## What gets published
+
+GitHub Pages serves this repo through Jekyll, and `_config.yml` excludes everything that
+isn't the site itself. These stay in git but are **not** served:
+
+- `README.md`, `HOWTO-ADD-A-GAME.md`, `games/*/SONG.md`
+- `tools/` (screenshot capture scripts)
+
+So the public deploy is only: `index.html`, `assets/`, `games/` (minus docs).
 
 ## Adding a game
 
@@ -34,5 +44,5 @@ python3 -m http.server 8000
 
 ## Cheat codes
 
-- Konami Code `↑↑↓↓←→←→ B A` → +30 lives, hamster mode
-- `M` → hamster mode toggle
+- Konami Code `↑↑↓↓←→←→ B A` → ninja mode
+- `M` → ninja mode toggle
