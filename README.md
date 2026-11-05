@@ -10,6 +10,7 @@ Live site: **https://ninjagamer803.github.io**
 |---|---|
 | `games/hamster-apocalypse/` | Hamster Apocalypse — first-person zombie shooter (Three.js) |
 | `games/sea-monsters/` | Attack of the Sea Monsters — underwater 3D shooter starring Hermy the Hermit Crab |
+| `games/hamster-escape/` | Hamster Escape — 3D stealth shooter: break out of the cage, dodge guinea pig guards, grab the Giant Seed of Gold |
 
 ## How it works
 

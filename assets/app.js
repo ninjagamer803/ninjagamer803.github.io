@@ -74,9 +74,15 @@ function searchTerms(g) {
 
 function filtered() {
   const q = SEARCH.value.trim().toLowerCase();
+  // Split into words so "hamster zombie" or "sea crab" matches instead of
+  // failing as one long substring. Every word must appear somewhere.
+  const terms = q ? q.split(/\s+/).filter(Boolean) : [];
   let list = games.filter((g) => {
     const inGenre = genre === 'All' || (g.category || 'Other') === genre;
-    return inGenre && (!q || searchTerms(g).includes(q));
+    if (!inGenre) return false;
+    if (!terms.length) return true;
+    const hay = searchTerms(g);
+    return terms.every((t) => hay.includes(t));
   });
   const mode = SORT.value;
   list = [...list].sort((a, b) => {

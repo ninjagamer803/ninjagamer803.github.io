@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hamster Escape — Free 3D Stealth Shooter</title>
+<meta name="description" content="Play Hamster Escape free in your browser: sneak out of the cage, slip through the house and reach the Giant Seed of Gold while dodging guinea pig guards in this 3D stealth shooter." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://ninjagamer803.github.io/games/hamster-escape/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ninjagamer803" />
+<meta property="og:title" content="Hamster Escape — Free 3D Stealth Shooter" />
+<meta property="og:description" content="Break out of the cage, grab the Giant Seed of Gold, and don't get bonked by the guinea pig guards. Free 3D game, no installs." />
+<meta property="og:url" content="https://ninjagamer803.github.io/games/hamster-escape/" />
+<meta property="og:image" content="https://ninjagamer803.github.io/games/hamster-escape/screenshot.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Hamster Escape","url":"https://ninjagamer803.github.io/games/hamster-escape/","description":"You are a hamster trapped in a cage. Sneak out of the cage, slip through the house, and reach the Giant Seed of Gold — while dodging the guinea pig guards patrolling every room. Two levels, four weapons, and one very big guard.","image":"https://ninjagamer803.github.io/games/hamster-escape/screenshot.png","genre":"Shooter","gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any (web browser)","author":{"@type":"Person","name":"ninjagamer803"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #000; font-family: 'Trebuchet MS', sans-serif; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #crosshair { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); color: #fff; font-size: 22px; text-shadow: 0 0 4px #000; }
+  #objective { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); color: #ffd54a; font-size: 20px; text-shadow: 0 0 6px #000, 0 2px 2px #000; text-align: center; max-width: 80%; }
+  #objective .sub { color: #ddd; font-size: 13px; }
+  #levelTag { position: absolute; top: 18px; left: 18px; color: #ffd54a; font-size: 16px; text-shadow: 0 1px 3px #000; }
+  #healthbar { position: absolute; left: 24px; bottom: 60px; width: 220px; height: 18px; background: rgba(0,0,0,.5); border: 2px solid #fff; border-radius: 4px; }
+  #healthfill { height: 100%; width: 100%; background: linear-gradient(90deg,#e53935,#43a047); border-radius: 2px; transition: width .15s; }
+  #hpText { position: absolute; left: 24px; bottom: 38px; color: #fff; font-size: 13px; text-shadow: 0 1px 2px #000; }
+  #weapon { position: absolute; right: 24px; bottom: 60px; color: #fff; font-size: 18px; text-align: right; text-shadow: 0 1px 3px #000; }
+  #ammo { position: absolute; right: 24px; bottom: 38px; color: #ffd54a; font-size: 30px; text-shadow: 0 1px 3px #000; }
+  #prompt { position: absolute; bottom: 130px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 16px; background: rgba(0,0,0,.55); padding: 6px 14px; border-radius: 6px; display: none; }
+  #vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 45%, rgba(255,0,0,.55) 100%); opacity: 0; }
+  .screen { position: absolute; inset: 0; pointer-events: auto; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,.75); color: #fff; }
+  .screen h1 { font-size: 52px; margin: 0 0 12px; }
+  .screen p { font-size: 18px; margin: 6px; }
+  #startScreen h1 { color: #ffd54a; }
+  .hidden { display: none !important; }
+  kbd { background: #333; border: 1px solid #666; border-radius: 4px; padding: 1px 7px; font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="hud">
+  <div id="vignette"></div>
+  <div id="crosshair">+</div>
+  <div id="objective"></div>
+  <div id="healthbar"><div id="healthfill"></div></div>
+  <div id="hpText">100</div>
+  <div id="weapon">Seed Spitter</div>
+  <div id="ammo">20 / 60</div>
+  <div id="prompt"></div>
+  <div id="mouseHint" class="hidden"></div>
+  <div id="levelTag"></div>
+
+  <div id="startScreen" class="screen">
+    <h1>🐹 HAMSTER ESCAPE</h1>
+    <p>You are a hamster in a cage. Escape the cage. Escape the house. Reach the <b style="color:#ffd54a">Giant Seed of Gold</b>.</p>
+    <p>Beware the <b>guinea pig guards</b>.</p>
+    <p style="margin-top:14px"><kbd>W A S D</kbd> move &nbsp; <kbd>Shift</kbd> sprint &nbsp; <kbd>Ctrl/C</kbd> crouch (quieter) &nbsp; <kbd>Space</kbd> jump</p>
+    <p><kbd>1</kbd> Nibbler &nbsp; <kbd>2</kbd> Seed Spitter &nbsp; <kbd>3</kbd> Pellet Blaster &nbsp; <kbd>4</kbd> Wheel of Doom</p>
+    <p><kbd>Mouse</kbd> aim &nbsp; <kbd>Click</kbd> fire &nbsp; <kbd>R</kbd> reload &nbsp; <kbd>E</kbd> use door &nbsp; <kbd>V</kbd> cycle camera (1st / clean / 3rd)</p>
+    <p style="margin-top:20px; color: #ffd54a; font-size: 22px">CLICK TO START</p>
+  </div>
+
+  <div id="levelScreen" class="screen hidden">
+    <h1 style="color:#ffd700">🌱 LEVEL COMPLETE! 🌱</h1>
+    <p id="levelName"></p>
+    <p id="levelNext" style="color:#ffd54a; font-size:20px; margin-top:16px"></p>
+    <p style="color:#aaa">Press <kbd>R</kbd> to restart from the beginning</p>
+  </div>
+
+  <div id="winScreen" class="screen hidden">
+    <h1 style="color:#ffd700">🌱 SEED OF GOLD SECURED! 🌱</h1>
+    <p id="winStats"></p>
+    <p style="color:#aaa">Press <kbd>R</kbd> to play again</p>
+  </div>
+
+  <div id="deadScreen" class="screen hidden">
+    <h1 style="color:#e53935">SNIFF SNIFF… you got bonked.</h1>
+    <p>Press <kbd>R</kbd> to try again</p>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "./js/vendor/three.module.js" } }
+</script>
+<script>
+  // surface any runtime error on screen instead of failing silently
+  window.addEventListener('error', (e) => {
+    let el = document.getElementById('err');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'err';
+      el.style.cssText = 'position:fixed;top:10px;left:10px;right:10px;z-index:9999;'
+        + 'background:rgba(120,0,0,0.92);color:#ffd6d6;font:13px monospace;padding:10px;'
+        + 'white-space:pre-wrap;border:1px solid #ff8a80;max-height:40vh;overflow:auto;';
+      document.body.appendChild(el);
+    }
+    el.textContent = ('\u26a0 ' + e.message + (e.filename ? '\n' + e.filename + ':' + e.lineno : '') + '\n' + el.textContent).slice(0, 2000);
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    let el = document.getElementById('err');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'err';
+      el.style.cssText = 'position:fixed;top:10px;left:10px;right:10px;z-index:9999;'
+        + 'background:rgba(120,0,0,0.92);color:#ffd6d6;font:13px monospace;padding:10px;white-space:pre-wrap;';
+      document.body.appendChild(el);
+    }
+    el.textContent = '\u26a0 module failed: ' + (e.reason && e.reason.message || e.reason) + '\n' + el.textContent;
+  });
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

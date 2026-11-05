@@ -1,0 +1,13 @@
+{
+  "title": "Hamster Escape",
+  "author": "ninjagamer803",
+  "description": "You are a hamster trapped in a cage. Sneak out of the cage, slip through the house, and reach the Giant Seed of Gold — while dodging the guinea pig guards patrolling every room. Two levels, four weapons, and one very big guard.",
+  "tagline": "Break out of the cage. Grab the seed. Don't get bonked.",
+  "emoji": "🐹",
+  "category": "Shooter",
+  "tags": ["three.js", "fps", "hamster", "escape", "stealth", "3d"],
+  "thumbnail": "screenshot.png",
+  "screenshot": "screenshot.png",
+  "featured": false,
+  "version": "1.0.0"
+}
