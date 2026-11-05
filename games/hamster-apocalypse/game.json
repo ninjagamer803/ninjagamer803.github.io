@@ -1,0 +1,13 @@
+{
+  "title": "Hamster Apocalypse",
+  "author": "ninjagamer803",
+  "description": "Hammy the hamster is last in Central Park Hill. Blast waves of zombies in this first-person shooter — ride a motorcycle, drive an M1-Hamster tank, summon the Hamster Stampede, and grab the jetpack + rocket launcher at Wave 10.",
+  "tagline": "It's HAMMY against the world (in 3D)",
+  "emoji": "🐹",
+  "category": "Shooter",
+  "tags": ["three.js", "fps", "zombies", "hamster", "wave-shooter", "tank", "motorcycle"],
+  "thumbnail": "screenshot.png",
+  "screenshot": "screenshot.png",
+  "featured": true,
+  "version": "1.0.0"
+}

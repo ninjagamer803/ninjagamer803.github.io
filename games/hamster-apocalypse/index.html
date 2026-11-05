@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamster Apocalypse</title>
+  <script type="module" crossorigin src="./assets/index-BzTcLJz2.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C878Ltbp.css">
+</head>
+<body>
+  <div id="hud">
+    <div id="topbar">
+      <div id="wave">WAVE 1</div>
+      <div id="score">SCORE 0</div>
+      <div id="hiscore">HI 0</div>
+      <div id="view">VIEW: FIRST-PERSON [C]</div>
+    </div>
+
+    <div id="crosshair">
+      <span class="ch top"></span><span class="ch bot"></span>
+      <span class="ch left"></span><span class="ch right"></span>
+    </div>
+    <div id="hitmark" class="hidden"></div>
+
+    <div id="weapons"></div>
+
+    <div id="bottomleft">
+      <div id="healthlabel">HEALTH</div>
+      <div id="healthbar"><div id="healthfill"></div></div>
+    </div>
+
+    <div id="bottomright">
+      <div id="weaponname"></div>
+      <div id="ammo"></div>
+      <div id="reloadtip" class="hidden">RELOADING…</div>
+    </div>
+
+    <div id="pickuptip" class="hidden">[E] TAKE AMMO</div>
+    <div id="fatline" class="hidden"></div>
+
+    <div id="fuelbar" class="hidden"><span id="fuellabel">FUEL</span><div id="fuelfill"></div></div>
+
+    <div id="bossbar" class="hidden"><span id="bosslabel">THE GIANT</span><div id="bossfill"></div></div>
+
+    <div id="legend" class="hidden">
+      <div class="ltitle">CONTROLS</div>
+      <div class="lrow"><b>W A S D</b><span>move</span></div>
+      <div class="lrow"><b>MOUSE / ARROWS</b><span>aim & look</span></div>
+      <div class="lrow"><b>LMB / F</b><span>fire</span></div>
+      <div class="lrow"><b>SHIFT</b><span>sprint</span></div>
+      <div class="lrow"><b>SPACE</b><span>jump · hold to fly (jetpack)</span></div>
+      <div class="lrow"><b>1 – 5</b><span>select weapon</span></div>
+      <div class="lrow"><b>Q</b><span>cycle weapons</span></div>
+      <div class="lrow"><b>R</b><span>reload</span></div>
+      <div class="lrow"><b>E</b><span>ammo / turret / glowing green door</span></div>
+      <div class="lrow"><b>GREEN BEAM</b><span>secret apartment — fat hamster. safe inside</span></div>
+      <div class="lrow"><b>J</b><span>summon zombie king (+jetpack & rocket)</span></div>
+      <div class="lrow"><b>M</b><span>ride / dismount motorcycle (wave 3+)</span></div>
+      <div class="lrow"><b>T</b><span>drive M1-Hamster tank (wave 5+) · click = cannon</span></div>
+      <div class="lrow"><b>B</b><span>roll the hamster ball (wave 7+)</span></div>
+      <div class="lrow"><b>H</b><span>hamster stampede — 50 hamsters charge where you look (1×/wave)</span></div>
+      <div class="lrow"><b>C</b><span>cycle camera view</span></div>
+      <div class="lrow"><b>?</b><span>show / hide this legend</span></div>
+      <div class="lrow"><b>ESC</b><span>pause</span></div>
+    </div>
+  </div>
+
+  <div id="vignette"></div>
+  <div id="banner" class="hidden"></div>
+
+  <div id="overlay">
+    <div id="overlay-content"></div>
+  </div>
+
+</body>
+</html>

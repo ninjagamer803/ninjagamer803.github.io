@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+*.local
+# keep game screenshots small-ish
+games/*/screenshot-*.png
+!games/*/screenshot.png

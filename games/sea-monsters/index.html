@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Attack of the Sea Monsters — Hermy the Hermit Crab</title>
+<style>
+  html,body{margin:0;padding:0;overflow:hidden;background:#001a2e;width:100%;height:100%;
+    font-family:'Trebuchet MS',Verdana,sans-serif;user-select:none;}
+  #game-canvas{display:block;width:100vw;height:100vh;}
+  #hud{position:fixed;inset:0;pointer-events:none;color:#dff6ff;text-shadow:0 1px 3px rgba(0,0,0,.7);}
+  .panel{background:rgba(2,20,38,.55);border:1px solid rgba(120,220,255,.35);border-radius:10px;padding:8px 12px;backdrop-filter:blur(2px);}
+  #top-left{position:absolute;top:14px;left:14px;width:230px;}
+  .bar{height:14px;border-radius:7px;background:rgba(0,0,0,.5);overflow:hidden;margin:4px 0 8px;border:1px solid rgba(255,255,255,.15);}
+  .bar>div{height:100%;transition:width .15s;}
+  #hp-fill{background:linear-gradient(90deg,#ff5d5d,#ff9d7d);width:100%;}
+  #shield-fill{background:linear-gradient(90deg,#59e0ff,#8ff2c0);width:0%;}
+  #score-line{font-size:18px;font-weight:bold;color:#ffe9a0;}
+  #top-right{position:absolute;top:14px;right:14px;text-align:right;}
+  #top-right .lbl{font-size:11px;letter-spacing:2px;color:#8fe3ff;margin-bottom:2px;}
+  #minimap{display:block;border:1px solid rgba(120,220,255,.4);border-radius:6px;background:rgba(0,15,30,.6);}
+  #radar{display:block;margin:10px 0 0 auto;border:1px solid rgba(120,220,255,.4);border-radius:50%;background:rgba(0,15,30,.6);}
+  #bottom-center{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:10px;}
+  #super-atk{position:absolute;bottom:74px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:bold;color:#ffd23d;text-shadow:0 1px 4px #000;opacity:.95;}
+  .slot{width:78px;text-align:center;padding:6px;border-radius:10px;background:rgba(2,20,38,.6);
+    border:2px solid rgba(120,220,255,.25);}
+  .slot.active{border-color:#ffe9a0;background:rgba(40,35,5,.7);box-shadow:0 0 14px rgba(255,220,120,.5);}
+  .slot .num{font-size:11px;color:#8fe3ff;}
+  .slot .name{font-size:12px;font-weight:bold;}
+  .slot .chg{font-size:11px;color:#ffe9a0;min-height:14px;}
+  .slot.locked{opacity:.45;}
+  #level-select{display:flex;gap:6px;margin-top:8px;justify-content:center;}
+  .lv-btn{width:38px;height:34px;border-radius:8px;background:rgba(6,32,54,.8);color:#8fe3ff;border:1px solid rgba(120,200,255,.35);font-size:15px;font-weight:bold;cursor:pointer;}
+  .lv-btn.on{border-color:#ffe9a0;background:rgba(60,50,8,.85);color:#ffe9a0;}
+  #bottom-left{position:absolute;bottom:18px;left:14px;width:250px;font-size:14px;}
+  #level-name{font-size:18px;font-weight:bold;color:#8ff2c0;}
+  #kill-goal{color:#ffd27d;}
+  #depth-gauge{color:#8fe3ff;font-size:12px;}
+  #crosshair{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#bfefff;
+    font-size:22px;text-shadow:0 0 6px #06c;}
+  #crosshair .h{display:block;width:18px;height:2px;background:#bfefff;box-shadow:0 0 6px #4df;}
+  #crosshair .v{display:block;width:2px;height:18px;background:#bfefff;margin:0 auto;box-shadow:0 0 6px #4df;}
+  #crosshair .row{display:flex;justify-content:space-between;width:34px;}
+  #msg{position:absolute;top:22%;left:50%;transform:translateX(-50%);font-size:26px;font-weight:bold;
+    color:#ffe9a0;opacity:0;transition:opacity .4s;text-align:center;width:80%;}
+  #vignette{position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 180px rgba(255,0,0,0);transition:box-shadow .3s;}
+  #overlay{position:fixed;inset:0;background:rgba(1,10,22,.82);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;color:#dff6ff;z-index:10;pointer-events:auto;}
+  #overlay h1{font-size:46px;color:#8ff2c0;text-shadow:0 0 24px rgba(0,255,200,.6);margin:0 0 4px;}
+  #overlay h2{font-size:20px;color:#ffe9a0;font-weight:normal;margin:0 0 26px;}
+  #overlay .keys{font-size:15px;line-height:2;text-align:left;background:rgba(0,25,45,.6);
+    border:1px solid rgba(120,220,255,.3);border-radius:12px;padding:14px 28px;margin-bottom:28px;}
+  #overlay .keys b{color:#8fe3ff;display:inline-block;width:120px;}
+  #overlay button{font:inherit;font-size:22px;padding:12px 42px;border-radius:12px;cursor:pointer;
+    background:linear-gradient(180deg,#2ec4b6,#1b7f8e);color:#fff;border:2px solid #8ff2c0;
+    box-shadow:0 0 22px rgba(46,196,182,.6);}
+  #overlay button:hover{filter:brightness(1.15);}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<canvas id="game-canvas"></canvas>
+
+<div id="hud">
+  <div id="top-left" class="panel">
+    <span style="font-size:12px;color:#8fe3ff;">HERMY</span>
+    <div class="bar"><div id="hp-fill"></div></div>
+    <div class="bar"><div id="shield-fill"></div></div>
+    <div id="score-line">★ Score: <span id="score">0</span></div>
+  </div>
+  <div id="top-right">
+    <div class="lbl">MAP</div>
+    <canvas id="minimap" width="170" height="210"></canvas>
+    <div class="lbl" style="margin-top:8px;">RADAR</div>
+    <canvas id="radar" width="120" height="120"></canvas>
+  </div>
+  <div id="super-atk"></div>
+  <div id="bottom-center">
+    <div class="slot" id="slot-0"><div class="num">[1]</div><div class="name">Shrimp Blaster</div><div class="chg" id="chg-0"></div></div>
+    <div class="slot" id="slot-1"><div class="num">[2]</div><div class="name">Bubble Burst</div><div class="chg" id="chg-1"></div></div>
+    <div class="slot" id="slot-2"><div class="num">[3]</div><div class="name">Crab Shell</div><div class="chg" id="chg-2"></div></div>
+    <div class="slot locked" id="slot-3"><div class="num">[4]</div><div class="name">Lava Blaster</div><div class="chg" id="chg-3">🔒 boss</div></div>
+    <div class="slot locked" id="slot-4"><div class="num">[5]</div><div class="name">Laser Gun</div><div class="chg" id="chg-4">🔒 boss</div></div>
+    <div class="slot" id="slot-5"><div class="num">[6]</div><div class="name">Flame Thrower</div><div class="chg" id="chg-5"></div></div>
+  </div>
+  <div id="bottom-left" class="panel">
+    <div id="level-name">Sunny Shallows</div>
+    <div id="kill-goal"></div>
+    <div id="depth-gauge"></div>
+  </div>
+  <div id="crosshair">
+    <div class="row"><span class="h" style="transform:translateY(8px)"></span></div>
+    <div class="row" style="margin:3px 0;"><span class="v"></span></div>
+    <div class="row"><span class="h" style="transform:translateY(-8px)"></span></div>
+  </div>
+  <div id="msg"></div>
+</div>
+<div id="vignette"></div>
+
+<div id="overlay">
+  <h1>🦀 ATTACK OF THE SEA MONSTERS</h1>
+  <h2>Starring Hermy the Hermit Crab</h2>
+  <div class="keys">
+    <b>W A S D</b> swim / crawl<br>
+    <b>Mouse</b> look &nbsp; <b>Click</b> fire weapon<br>
+    <b>Space</b> rise &nbsp; <b>Ctrl / X</b> sink<br>
+    <b>Shift</b> burst of speed<br>
+    <b>1 / 2 / 3</b> Shrimp Blaster · Bubble Burst · Crab Shell<br>
+    <b>4 / 5 / 6</b> Lava Blaster · Laser Gun · Flame Thrower<br>
+    <b>R</b> <span style="color:#ffd23d">SUPER ATTACK</span> — 100,000 crabs fight by your side! (45s cooldown)<br>
+    <b>J</b> summon the MEGALODON + get the Mech (test anywhere)<br>
+    <b>C</b> toggle First-Person / Third-Person camera<br>
+    <b>E</b> use portal / grab treasure / rescue lost crabs 🐚<br>
+    <b>M</b> toggle map &nbsp; <b>N</b> music on/off
+  </div>
+  <div class="lbl" style="margin-top:14px;">START LEVEL</div>
+  <div id="level-select"></div>
+  <div style="font-size:14px;margin-bottom:26px;color:#8fe3ff;">
+    Start on the beach, dive under, and fight the monsters of the deep.<br>
+    Friendly sea life will aid you. Beware the sharks, octopi… and the colossal squid.
+  </div>
+  <button id="start-btn">DIVE IN</button>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js" } }
+</script>
+<script type="module" src="./game.js"></script>
+</body>
+</html>

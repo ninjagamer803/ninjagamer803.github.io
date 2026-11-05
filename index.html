@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ninjagamer803 — Free 3D Games</title>
+<meta name="description" content="Free browser 3D games by ninjagamer803. Shooters, puzzles, racers and more — no downloads, no installs, just click and play." />
+<meta name="theme-color" content="#12141f" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥷</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div id="bg" aria-hidden="true"><canvas id="bg-canvas"></canvas></div>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="ninjagamer803 home">
+    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" aria-hidden="true"><polygon points="24,2 29,19 46,24 29,29 24,46 19,29 2,24 19,19" fill="currentColor"></polygon><circle cx="24" cy="24" r="4" fill="#12141f"></circle></svg></span>
+    <span class="brand-word">ninjagamer<span>803</span></span>
+    <span class="brand-free">FREE&nbsp;3D&nbsp;GAMES</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#games">Games</a>
+    <a href="#how">How it works</a>
+    <a href="#makers">Makers</a>
+    <a href="https://github.com/ninjagamer803/ninjagamer803.github.io" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+  <button id="sound-toggle" class="chip" type="button" aria-pressed="false" title="Synth bleeps on/off">🔊 Sound</button>
+</header>
+
+<!-- ——— HERO ——— -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <p class="eyebrow">Browser games · Built with Three.js</p>
+    <h1 class="hero-title">Play our <span class="accent">ninja</span> games<span class="hammy">by ninjagamer803 — free forever</span></h1>
+    <p class="hero-sub">Fast, sneaky and made by us. Pick a game, press play, and try to beat our high scores.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#games">Play now</a>
+      <a class="btn btn-ghost" href="#how">How it works</a>
+    </div>
+    <p class="hero-nerd mono" id="stat-line">Sharpening the dojo…</p>
+  </div>
+  <div class="hero-fox" aria-hidden="true"><svg viewBox="0 0 400 400" role="img" aria-label="Ninja star"><circle cx="200" cy="200" r="190" fill="none" stroke="#2A3050" stroke-width="4"></circle><circle cx="200" cy="200" r="140" fill="none" stroke="#2A3050" stroke-width="4" stroke-dasharray="12 12"></circle><polygon points="200,50 225,175 350,200 225,225 200,350 175,225 50,200 175,175" fill="currentColor"></polygon><circle cx="200" cy="200" r="26" fill="#12141F"></circle><circle cx="62" cy="86" r="6" fill="#FFD23F"></circle><circle cx="338" cy="320" r="6" fill="#FFD23F"></circle><circle cx="350" cy="90" r="4" fill="#FFF8EC"></circle><circle cx="48" cy="312" r="4" fill="#FFF8EC"></circle></svg></div>
+</section>
+
+<!-- ——— GAMES ——— -->
+<main id="games" class="games">
+  <div class="games-inner">
+    <div class="games-head">
+      <h2>Pick a game <span class="count-pill" id="game-count" style="font-family:var(--font-body);font-size:0.5em;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:2px 12px;vertical-align:middle;">…</span></h2>
+      <p class="sub">Works on a laptop or a tablet. No downloads.</p>
+      <div class="controls">
+        <label class="search">
+          <span aria-hidden="true">🔍</span>
+          <input id="search" type="search" placeholder="Search games, tags…" autocomplete="off" />
+        </label>
+        <label class="sort">
+          <span>Sort</span>
+          <select id="sort">
+            <option value="featured">★ Featured first</option>
+            <option value="title">A → Z</option>
+            <option value="newest">Newest</option>
+          </select>
+        </label>
+        <div class="toggle-group" role="group" aria-label="View">
+          <button id="view-grid" class="chip active" type="button">▦ Grid</button>
+          <button id="view-list" class="chip" type="button">☰ List</button>
+        </div>
+      </div>
+      <div id="genre-row" class="genre-row" role="group" aria-label="Filter by genre"></div>
+      <p id="status" class="status mono" role="status"></p>
+    </div>
+    <div id="grid" class="grid"></div>
+    <p id="empty" class="empty" hidden>No quests match that search. Try another word, or clear the search.</p>
+  </div>
+</main>
+
+<!-- ——— HOW IT WORKS ——— -->
+<section id="how" class="how">
+  <h2>How it works</h2>
+  <div class="step-grid">
+    <div class="step"><p class="step-num">1</p><h3>We write code</h3><p>HTML, CSS and JavaScript build every game.</p></div>
+    <div class="step"><p class="step-num">2</p><h3>We push it to GitHub</h3><p>GitHub Pages puts the files on the internet.</p></div>
+    <div class="step"><p class="step-num">3</p><h3>You play</h3><p>Your browser runs the game. Nothing to install!</p></div>
+    <div class="step"><p class="step-num">4</p><h3>New games arrive</h3><p>Every genre has a place — shooters, puzzles, racers, platformers. New quests keep marching in. Add yours with the <a href="HOWTO-ADD-A-GAME.md" style="color:var(--txt);font-weight:800;">agent HOWTO</a>.</p></div>
+  </div>
+</section>
+
+<!-- ——— MAKERS / DOJO ——— -->
+<section id="makers" class="about">
+  <div class="about-inner">
+    <h2>Made by</h2>
+    <div class="nerd-grid">
+      <article class="nerd-card">
+        <span class="maker-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><polygon points="24,2 29,19 46,24 29,29 24,46 19,29 2,24 19,19" fill="currentColor"></polygon><circle cx="24" cy="24" r="4" fill="#12141f"></circle></svg></span>
+        <div><h3>ninjagamer803</h3><p>Game maker · Hamster Apocalypse, and more on the way</p></div>
+      </article>
+      <article class="nerd-card">
+        <span class="maker-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><polygon points="24,2 29,19 46,24 29,29 24,46 19,29 2,24 19,19" fill="currentColor"></polygon><circle cx="24" cy="24" r="4" fill="#12141f"></circle></svg></span>
+        <div><h3>Your crew here</h3><p>Add your maker card and your game — <a href="HOWTO-ADD-A-GAME.md" style="color:var(--txt);font-weight:800;">step-by-step HOWTO</a></p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>ninjagamer803 · Made with HTML, CSS, JavaScript and Three.js — free forever</p>
+    <p><a href="#top">Back to top</a> &nbsp;·&nbsp; <a href="HOWTO-ADD-A-GAME.md">Add a game</a> &nbsp;·&nbsp; <span class="mono small">↑↑↓↓←→←→BA · press M</span></p>
+  </div>
+</footer>
+
+<div id="konami" class="konami" hidden>🎉 NINJA MODE — move like a shadow!</div>
+
+<script type="module">
+  import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+  window.THREE = THREE;
+  window.dispatchEvent(new Event('three-ready'));
+</script>
+<script src="assets/app.js" defer></script>
+</body>
+</html>

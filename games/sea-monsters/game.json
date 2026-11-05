@@ -1,0 +1,13 @@
+{
+  "title": "Attack of the Sea Monsters",
+  "author": "ninjagamer803",
+  "description": "Play as Hermy the Hermit Crab in this underwater 3D shooter. Dive from the sunny shallows into the deep, blast sharks, octopi and the colossal squid, unlock six weapons, and summon 100,000 crabs for a super attack.",
+  "tagline": "Hermy the Hermit Crab vs. the deep",
+  "emoji": "🦀",
+  "category": "Shooter",
+  "tags": ["three.js", "underwater", "crab", "fps", "sea-monsters", "boss-fight"],
+  "thumbnail": "screenshot.png",
+  "screenshot": "screenshot.png",
+  "featured": false,
+  "version": "1.0.0"
+}
